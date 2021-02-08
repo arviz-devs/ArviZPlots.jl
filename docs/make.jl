@@ -11,11 +11,7 @@ makedocs(;
         canonical="https://arviz-devs.github.io/ArviZPlots.jl",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
 )
 
-deploydocs(;
-    repo="github.com/arviz-devs/ArviZPlots.jl",
-)
+deploydocs(; repo="github.com/arviz-devs/ArviZPlots.jl")
