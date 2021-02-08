@@ -1,0 +1,3 @@
+[deps]
+ArviZPlots = "8a1e6714-0cb5-4d96-8483-49ba731f3e3e"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
