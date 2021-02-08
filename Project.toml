@@ -3,7 +3,10 @@ uuid = "8a1e6714-0cb5-4d96-8483-49ba731f3e3e"
 authors = ["Seth Axen <seth.axen@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
 [compat]
+RecipesBase = "1"
 julia = "1"
 
 [extras]

@@ -1,5 +1,7 @@
 module ArviZPlots
 
-# Write your package code here.
+using RecipesBase: RecipesBase
+
+include("ingredients.jl")
 
 end
