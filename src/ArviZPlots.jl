@@ -1,5 +1,6 @@
 module ArviZPlots
 
+using ArviZ
 using KernelDensity: KernelDensity
 using RecipesBase: RecipesBase
 using RecipesPipeline: RecipesPipeline
