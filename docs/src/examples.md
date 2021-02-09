@@ -29,6 +29,8 @@ Plot as the cumulative distribution
 distplot(b; showrug=true, cumulative=true)
 ```
 
+See [`distplot`](@ref)
+
 ## KDE Plot
 
 Plot default KDE
@@ -84,3 +86,5 @@ Plot 2d smooth KDE
 ```@example kde2dplot
 kde2dplot(mu_posterior, tau_posterior; contour=false)
 ```
+
+See [`kde2dplot`](@ref)
