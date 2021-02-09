@@ -32,9 +32,9 @@ end
 
 RecipesBase.@shorthands kdeplot
 
-RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z)
+RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour = false)
     kd = KernelDensity.kde((x, y); boundary=(extrema(x), extrema(y)))
-    seriestype := :contour
+    seriestype := contour ? :contour : :heatmap
     x := kd.x
     y := kd.y
     z := RecipesPipeline.Surface(kd.density)
