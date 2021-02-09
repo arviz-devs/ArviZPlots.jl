@@ -58,3 +58,16 @@ end
 
 RecipesBase.@shorthands kdeplot
 
+RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z)
+    kd = KernelDensity.kde((x, y); boundary=(extrema(x), extrema(y)))
+    seriestype := :contour
+    x := kd.x
+    y := kd.y
+    z := RecipesPipeline.Surface(kd.density)
+    fill --> true
+    colorbar --> false
+    return ()
+end
+
+RecipesBase.@shorthands kde2dplot
+
