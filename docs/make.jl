@@ -21,4 +21,4 @@ makedocs(;
     ],
 )
 
-deploydocs(; repo="github.com/arviz-devs/ArviZPlots.jl")
+deploydocs(; devbranch="main", repo="github.com/arviz-devs/ArviZPlots.jl")
