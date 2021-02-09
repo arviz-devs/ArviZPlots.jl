@@ -28,7 +28,9 @@ RecipesBase.@recipe function f(
     showrug=false,
     rugspace=DEFAULT_RUG_SPACE,
 )
+    isrot = isrotated(plotattributes)
     kd = KernelDensity.kde(y; boundary=extrema(y))
+    xnew = kd.x
     ynew = kd.density
     if cumulative
         ynew = cumsum(ynew)
@@ -47,10 +49,17 @@ RecipesBase.@recipe function f(
             ()
         end
     else # no need to set ylims if rug already widened axes for us
-        ylims --> (0, Inf)
+        if isrot
+            xlims --> (0, Inf)
+        else
+            ylims --> (0, Inf)
+        end
     end
     seriestype := :path
-    x := kd.x
+    if isrotated(plotattributes)
+        xnew, ynew = ynew, xnew
+    end
+    x := xnew
     y := ynew
     return ()
 end
@@ -74,8 +83,9 @@ RecipesBase.@shorthands kde2dplot
 RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true)
     kd = KernelDensity.kde((x, y); boundary=(extrema(x), extrema(y)))
     seriestype := contour ? :contour : :heatmap
-    x := kd.x
-    y := kd.y
+    xnew, ynew = isrotated(plotattributes) ? (kd.x, kd.y) : (kd.y, kd.x)
+    x := xnew
+    y := ynew
     z := RecipesPipeline.Surface(kd.density')
     colorbar --> false
     return ()

@@ -22,6 +22,7 @@ RecipesBase.@recipe function f(::Type{Val{:distplot}}, x, y, z; kind=:auto)
     if kind == :hist || (kind !== :kde && all(isinteger, y))
         seriestype := :barhist
         normalize --> :pdf
+        orientation := isrotated(plotattributes) ? :horizontal : :vertical
     else
         seriestype := :kdeplot
     end

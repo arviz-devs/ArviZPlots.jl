@@ -55,6 +55,12 @@ Plot the estimated cumulative distribution
 kdeplot(mu_posterior; cumulative=true)
 ```
 
+Rotate plot 90 degrees
+
+```@example kdeplot
+kdeplot(mu_posterior; rotated=true)
+```
+
 See [`kdeplot`](@ref)
 
 ## 2d KDE Plot

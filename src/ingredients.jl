@@ -12,11 +12,11 @@ Make a rugplot.
 - `x`: values
 
 # Keyword Arguments
-- `rugmarkershape=:vline`: shape of marker
+- `rugmarkershape=:auto`: shape of marker, defaulting to perpendicular to the data axis
 - `rugsize=$DEFAULT_RUG_SIZE`: size (height) of marker
 - `rugcolor=:auto`: color of marker
 - `rugalpha=:auto`: alpha value (transparency) of marker
-- `rugposition=0`: `y`-axis position of rug
+- `rugposition=0`: position of rug on non-data axis
 - `kwargs`: Additional attributes understood by Plots.jl
 """
 rugplot(x; kwargs...) = RecipesBase.plot(x; kwargs...)
@@ -27,15 +27,24 @@ RecipesBase.@recipe function f(
     x,
     y,
     z;
-    rugmarkershape=:vline,
+    rugmarkershape=:auto,
     rugsize=DEFAULT_RUG_SIZE,
     rugcolor=get(plotattributes, :seriescolor, :auto),
     rugalpha=get(plotattributes, :seriesalpha, :auto),
     rugposition=0,
 )
     seriestype := :scatter
-    x := y
-    y := fill(rugposition, length(y))
+    xnew = y
+    ynew = fill(rugposition, length(y))
+    isrot = isrotated(plotattributes)
+    if isrot
+        xnew, ynew = ynew, xnew
+    end
+    x := xnew
+    y := ynew
+    if rugmarkershape === :auto
+        rugmarkershape = isrot ? :hline : :vline
+    end
     markershape := rugmarkershape
     markersize := rugsize
     markercolor := rugcolor
