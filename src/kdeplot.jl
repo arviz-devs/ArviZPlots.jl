@@ -37,8 +37,8 @@ RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour = false
     seriestype := contour ? :contour : :heatmap
     x := kd.x
     y := kd.y
-    z := RecipesPipeline.Surface(kd.density)
     fill --> true
+    z := RecipesPipeline.Surface(kd.density')
     colorbar --> false
     return ()
 end
