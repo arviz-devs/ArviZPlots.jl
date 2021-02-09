@@ -13,9 +13,9 @@ Plot a 1D kernel density estimate (KDE) taking into account boundary conditions.
 - `cumulative=false`: If `true`, plot the estimated cumulative distribution function
 - `showrug=false`: If `true`, adds a rugplot
 - `rugspace=$DEFAULT_RUG_SPACE`: control the `y` position of the rugplot. The larger this
-number the lower the rugplot
+    number the lower the rugplot
 - `kwargs`: Additional attributes understood by Plots.jl. In particular, see keyword
-arguments for [`rugplot`](@ref).
+    arguments for [`rugplot`](@ref).
 """
 RecipesBase.@shorthands kdeplot
 

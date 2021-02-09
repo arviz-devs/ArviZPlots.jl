@@ -11,10 +11,10 @@ By default continuous variables are plotted using KDEs and discrete ones using h
 
 # Keyword Arguments
 - `kind=:auto`: By default (`:auto`), continuous variables are plotted using KDEs and
-discrete ones using histograms. To override this use `:hist` to plot histograms and `:kde`
-for KDEs
+    discrete ones using histograms. To override this use `:hist` to plot histograms and `:kde`
+    for KDEs
 - `kwargs`: Additional attributes understood by Plots.jl. In particular, see keyword
-arguments for [`kdeplot`](@ref) and `histogram`.
+    arguments for [`kdeplot`](@ref) and `histogram`.
 """
 RecipesBase.@shorthands distplot
 
