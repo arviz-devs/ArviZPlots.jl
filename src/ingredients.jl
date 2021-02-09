@@ -2,6 +2,26 @@
 
 const DEFAULT_RUG_SIZE = 8
 
+"""
+    rugplot(x; kwargs...)
+    rugplot!(x; kwargs...)
+
+Make a rugplot.
+
+# Positional Arguments
+- `x`: values
+
+# Keyword Arguments
+- `rugmarkershape=:vline`: shape of marker
+- `rugsize=$DEFAULT_RUG_SIZE`: size (height) of marker
+- `rugcolor=:auto`: color of marker
+- `rugalpha=:auto`: alpha value (transparency) of marker
+- `rugposition=0`: `y`-axis position of rug
+- `kwargs`: Additional attributes understood by Plots.jl
+"""
+rugplot(x; kwargs...) = RecipesBase.plot(x; kwargs...)
+rugplot!(x; kwargs...) = RecipesBase.plot!(x; kwargs...)
+
 RecipesBase.@recipe function f(
     ::Type{Val{:rugplot}},
     x,
@@ -11,7 +31,7 @@ RecipesBase.@recipe function f(
     rugsize=DEFAULT_RUG_SIZE,
     rugcolor=get(plotattributes, :seriescolor, :auto),
     rugalpha=get(plotattributes, :seriesalpha, :auto),
-    rugposition = 0,
+    rugposition=0,
 )
     seriestype := :scatter
     x := y
