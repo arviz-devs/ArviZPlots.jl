@@ -2,6 +2,8 @@ name: CI
 on:
   - push
   - pull_request
+env:
+  PYTHON: "Conda" # use Julia's packaged Conda build for installing packages
 jobs:
   test:
     name: Julia ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
