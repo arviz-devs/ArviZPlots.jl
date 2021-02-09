@@ -66,12 +66,12 @@ Plot a 2D kernel density estimate (KDE) taking into account boundary conditions.
 - `y`: `y` coordinates of the values
 
 # Keyword Arguments
-- `cumulative=false`: If `true`, plot the 2D KDE using contours, otherwise plot a heatmap.
+- `cumulative=true`: If `true`, plot the 2D KDE using contours, otherwise plot a heatmap.
 - `kwargs`: Additional attributes understood by Plots.jl.
 """
 RecipesBase.@shorthands kde2dplot
 
-RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=false)
+RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true)
     kd = KernelDensity.kde((x, y); boundary=(extrema(x), extrema(y)))
     seriestype := contour ? :contour : :heatmap
     x := kd.x
