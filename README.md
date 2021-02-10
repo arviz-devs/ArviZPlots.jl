@@ -1,7 +1,6 @@
 # ArviZPlots
 
-[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
-<!-- [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://arviz-devs.github.io/ArviZPlots.jl/stable) -->
+[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)<!-- [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://arviz-devs.github.io/ArviZPlots.jl/stable) -->
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://arviz-devs.github.io/ArviZPlots.jl/dev)
 [![Build Status](https://github.com/arviz-devs/ArviZPlots.jl/workflows/CI/badge.svg)](https://github.com/arviz-devs/ArviZPlots.jl/actions)
 [![Coverage](https://codecov.io/gh/arviz-devs/ArviZPlots.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/arviz-devs/ArviZPlots.jl)
