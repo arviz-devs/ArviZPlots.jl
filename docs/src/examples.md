@@ -108,10 +108,10 @@ tau_posterior = vec(non_centered.posterior["tau"].values)
 kde2dplot(mu_posterior, tau_posterior)
 ```
 
-Plot 2d contour KDE, with filling and contour lines using viridis cmap
+Plot 2d contour KDE, with filling.
 
 ```@example kde2dplot
-kde2dplot(mu_posterior, tau_posterior; fill=true, color=:viridis)
+kde2dplot(mu_posterior, tau_posterior; fill=true)
 ```
 
 Plot 2d contour KDE, set the number of levels to 3.
