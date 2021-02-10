@@ -1,5 +1,15 @@
 const DEFAULT_RUG_SPACE = 0.05
 
+kde(x; kwargs...) = ArviZ.arviz.stats.density_utils.kde(x; kwargs...)
+
+function kde(x, y; kwargs...)
+    density, xmin, xmax, ymin, ymax = ArviZ.arviz.stats.density_utils._fast_kde_2d(
+        x, y; kwargs...
+    )
+    nx, ny = size(density)
+    return range(xmin, xmax; length=nx), range(ymin, ymax; length=ny), density
+end
+
 """
     kdeplot(x; kwargs...)
     kdeplot!(x; kwargs...)
@@ -29,9 +39,7 @@ RecipesBase.@recipe function f(
     rugspace=DEFAULT_RUG_SPACE,
 )
     isrot = isrotated(plotattributes)
-    kd = KernelDensity.kde(y; boundary=extrema(y))
-    xnew = kd.x
-    ynew = kd.density
+    xnew, ynew = kde(y)
     if cumulative
         ynew = cumsum(ynew)
         ynew ./= ynew[end]
@@ -81,12 +89,14 @@ Plot a 2D kernel density estimate (KDE) taking into account boundary conditions.
 RecipesBase.@shorthands kde2dplot
 
 RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true)
-    kd = KernelDensity.kde((x, y); boundary=(extrema(x), extrema(y)))
+    xnew, ynew, density = kde(x, y)
     seriestype := contour ? :contour : :heatmap
-    xnew, ynew = isrotated(plotattributes) ? (kd.x, kd.y) : (kd.y, kd.x)
+    if isrotated(plotattributes)
+        xnew, ynew = ynew, xnew
+    end
     x := xnew
     y := ynew
-    z := RecipesPipeline.Surface(kd.density')
+    z := RecipesPipeline.Surface(density')
     colorbar --> false
     return ()
 end
