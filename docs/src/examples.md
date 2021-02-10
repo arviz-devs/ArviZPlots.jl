@@ -32,7 +32,7 @@ distplot(data; fill=true, var_names=["mu"])
 Plot an integer distribution
 
 ```@example distplot
-using Distributions, Plots, ArviZPlots
+using ArviZPlots, Distributions, Plots
 theme(:arviz_darkgrid)
 
 a = rand(Poisson(4), 1000)
@@ -65,7 +65,7 @@ See [`distplot`](@ref)
 Plot default KDE
 
 ```@example kdeplot
-using Plots, ArviZ, ArviZPlots
+using ArviZ, ArviZPlots, Plots
 theme(:arviz_darkgrid)
 
 non_centered = load_arviz_data("non_centered_eight")
@@ -99,7 +99,7 @@ See [`kdeplot`](@ref)
 Plot 2d contour KDE
 
 ```@example kde2dplot
-using Plots, ArviZ, ArviZPlots
+using ArviZ, ArviZPlots, Plots
 theme(:arviz_darkgrid)
 
 non_centered = load_arviz_data("non_centered_eight")
