@@ -37,7 +37,7 @@ const THEMES = Dict{Symbol,PlotThemes.PlotTheme}(
         ],
         colorgradient=:viridis,
         ## Axes / Ticks
-        showaxis=false,
+        showaxis=true,
         minorticks=false,
         foreground_color_axis=:white,
         foreground_color_border=:white,
