@@ -19,8 +19,8 @@ Make a rugplot.
 - `rugposition=0`: position of rug on non-data axis
 - `kwargs`: Additional attributes understood by Plots.jl
 """
-rugplot(x; kwargs...) = RecipesBase.plot(x; kwargs...)
-rugplot!(x; kwargs...) = RecipesBase.plot!(x; kwargs...)
+rugplot(x; kwargs...) = RecipesBase.plot(x; seriestype=:rugplot, kwargs...)
+rugplot!(x; kwargs...) = RecipesBase.plot!(x; seriestype=:rugplot, kwargs...)
 
 RecipesBase.@recipe function f(
     ::Type{Val{:rugplot}},
