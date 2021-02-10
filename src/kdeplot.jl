@@ -98,5 +98,6 @@ RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true)
     y := ynew
     z := RecipesPipeline.Surface(density')
     colorbar --> false
+    grid --> false
     return ()
 end
