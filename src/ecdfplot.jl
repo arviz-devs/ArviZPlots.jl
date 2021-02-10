@@ -27,7 +27,6 @@ RecipesBase.@recipe function f(::Type{Val{:ecdfplot}}, x, y, z; weights=nothing)
     seriestype := :steppost
     x := xnew
     y := ynew
-    legend --> :topleft
     return ()
 end
 
