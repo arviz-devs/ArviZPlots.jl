@@ -19,6 +19,13 @@ distplot(data; fill=true, alpha=0.5, var_names=["mu"], label="posterior")
 distplot!(data; fill=true, alpha=0.5, var_names=["mu"], groupname=:prior, label="prior")
 ```
 
+Plot using the custom `:arviz-darkgrid` theme.
+
+```@example basic
+theme(:arviz_darkgrid)
+distplot(data; fill=true, var_names=["mu"])
+```
+
 ## Dist Plot
 
 Plot an integer distribution
