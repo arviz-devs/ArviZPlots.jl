@@ -3,7 +3,6 @@ using ArviZPlots
 using Distributions
 using Documenter
 using Plots
-plotlyjs()
 
 makedocs(;
     modules=[ArviZPlots],
