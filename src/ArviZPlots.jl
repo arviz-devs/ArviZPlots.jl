@@ -5,10 +5,12 @@ using Colors: @colorant_str, RGB
 using PlotThemes: PlotThemes
 using RecipesBase: RecipesBase
 using RecipesPipeline: RecipesPipeline
+using StatsBase: StatsBase
 
 include("util.jl")
 include("themes.jl")
 include("ingredients.jl")
+include("ecdfplot.jl")
 include("kdeplot.jl")
 include("distplot.jl")
 include("pipeline.jl")
