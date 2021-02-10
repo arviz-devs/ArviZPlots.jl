@@ -7,6 +7,8 @@ const THEMES = Dict{Symbol,PlotThemes.PlotTheme}(
         ## Background
         background_color=:white,
         background_color_inside=colorant"#eeeeee",
+        ## Legend
+        legend = false,
         background_color_legend=false,
         foreground_color_legend=false,
         ## Font styles
