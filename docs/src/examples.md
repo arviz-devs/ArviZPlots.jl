@@ -1,5 +1,24 @@
 # Examples
 
+## Basic plotting
+
+Individual variables from `InferenceData` and `ArviZ.Dataset` can be plotted using any series type that can operate on the underlying draws.
+
+Plot histogram (Note that the histogram recipe is defined generally in Plots.jl).
+
+```@example basic
+using ArviZ, ArviZPlots, Plots
+data = load_arviz_data("centered_eight")
+histogram(data; legend=false, bins=20)
+```
+
+Plot estimated density of posterior and then prior.
+
+```@example basic
+distplot(data; fill=true, alpha=0.5, var_names=["mu"], label="posterior")
+distplot!(data; fill=true, alpha=0.5, var_names=["mu"], groupname=:prior, label="prior")
+```
+
 ## Dist Plot
 
 Plot an integer distribution
