@@ -58,6 +58,14 @@ Plot as the cumulative distribution
 distplot(b; showrug=true, cumulative=true)
 ```
 
+Compare with the empirical cumulative distribution function
+
+```@example kdeplot
+c = randn(100)
+distplot(c; cumulative=true, label="KDE CDF")
+distplot!(c; kind=:ecdf, label="ECDF", legend=:best)
+```
+
 See [`distplot`](@ref)
 
 ## KDE Plot
@@ -86,10 +94,10 @@ Plot the estimated cumulative distribution
 kdeplot(mu_posterior; cumulative=true)
 ```
 
-Rotate plot 90 degrees
+Rotate plot 90 degrees and fill
 
 ```@example kdeplot
-kdeplot(mu_posterior; rotated=true)
+kdeplot(mu_posterior; rotated=true, fill=true)
 ```
 
 See [`kdeplot`](@ref)
