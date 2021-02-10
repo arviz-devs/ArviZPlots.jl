@@ -8,6 +8,7 @@ Plot histogram (Note that the histogram recipe is defined generally in Plots.jl)
 
 ```@example basic
 using ArviZ, ArviZPlots, Plots
+
 data = load_arviz_data("centered_eight")
 histogram(data; legend=false, bins=20)
 ```
@@ -32,6 +33,8 @@ Plot an integer distribution
 
 ```@example distplot
 using Distributions, Plots, ArviZPlots
+theme(:arviz_darkgrid)
+
 a = rand(Poisson(4), 1000)
 distplot(a)
 ```
@@ -63,6 +66,8 @@ Plot default KDE
 
 ```@example kdeplot
 using Plots, ArviZ, ArviZPlots
+theme(:arviz_darkgrid)
+
 non_centered = load_arviz_data("non_centered_eight")
 mu_posterior = vec(non_centered.posterior["mu"].values)
 tau_posterior = vec(non_centered.posterior["tau"].values)
@@ -95,6 +100,8 @@ Plot 2d contour KDE
 
 ```@example kde2dplot
 using Plots, ArviZ, ArviZPlots
+theme(:arviz_darkgrid)
+
 non_centered = load_arviz_data("non_centered_eight")
 mu_posterior = vec(non_centered.posterior["mu"].values)
 tau_posterior = vec(non_centered.posterior["tau"].values)
