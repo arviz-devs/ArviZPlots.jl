@@ -39,7 +39,6 @@ const ARVIZ_BASE_THEME = PlotThemes.PlotTheme(;
     colorgradient=:viridis,
     ## Marker
     markerstrokewidth=0,
-    # markerstrokecolor=:match,
     markersize=7,
 )
 
@@ -89,7 +88,6 @@ const THEMES = Dict{Symbol,PlotThemes.PlotTheme}(
         tick_direction=:out,
         ## Grid
         grid=:false,
-        # gridstyle=:solid,
         gridalpha=1,
         foreground_color_grid=:black,
     ),
