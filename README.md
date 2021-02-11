@@ -8,3 +8,5 @@
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 
 ArviZPlots provides experimental [Plots.jl](https://github.com/JuliaPlots/Plots.jl) integration to [ArviZ.jl](https://github.com/arviz-devs/ArviZ.jl). 
+
+See the [Examples](https://arviz-devs.github.io/ArviZPlots.jl/dev/examples/).
