@@ -20,7 +20,7 @@ distplot(data; fill=true, alpha=0.5, var_names=["mu"], label="posterior")
 distplot!(data; fill=true, alpha=0.5, var_names=["mu"], groupname=:prior, label="prior")
 ```
 
-Plot using the custom `:arviz-darkgrid` theme.
+Plot using the custom `:arviz-darkgrid` theme (see [Themes](@ref)).
 
 ```@example basic
 theme(:arviz_darkgrid)
@@ -135,3 +135,29 @@ kde2dplot(mu_posterior, tau_posterior; contour=false)
 ```
 
 See [`kde2dplot`](@ref)
+
+## Themes
+
+ArviZPlots comes with the following themes, which can be activated e.g. using
+
+```julia
+using ArviZPlots, Plots
+
+theme(:arviz_darkgrid)
+```
+
+The available themes are demoed below.
+
+```@example themes
+using ArviZPlots, Plots
+
+showtheme(:arviz_darkgrid)
+```
+
+```@example themes
+showtheme(:arviz_whitegrid)
+```
+
+```@example themes
+showtheme(:arviz_white)
+```
