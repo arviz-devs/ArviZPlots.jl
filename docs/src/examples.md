@@ -63,7 +63,7 @@ Compare with the empirical cumulative distribution function
 ```@example distplot
 c = randn(100)
 distplot(c; cumulative=true, label="KDE CDF")
-distplot!(c; kind=:ecdf, label="ECDF", legend=:best)
+distplot!(c; kind=:ecdf, label="ECDF", legend=:topleft)
 ```
 
 See [`distplot`](@ref)
