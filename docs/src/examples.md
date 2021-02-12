@@ -68,6 +68,24 @@ distplot!(c; kind=:ecdf, label="ECDF", legend=:best)
 
 See [`distplot`](@ref)
 
+## Energy Plot
+
+Plot a default energy plot
+
+```@example energy
+using ArviZ, ArviZPlots, Plots
+theme(:arviz_darkgrid)
+
+data = load_arviz_data("centered_eight")
+energyplot(data)
+```
+
+Represent energy plot via histograms
+
+```@example energy
+energyplot(data; kind=:hist, strokewidth=0)
+```
+
 ## KDE Plot
 
 Plot default KDE
