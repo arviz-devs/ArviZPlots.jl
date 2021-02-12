@@ -21,6 +21,14 @@ Plot a 1D or 2D kernel density estimate (KDE) taking into account boundary condi
 - `y`: Values to plot. If present, a 2D KDE will be estimated. See [`kde2dplot`](@ref).
 
 # Keyword Arguments
+- `bw=:default`: If numeric, indicates the bandwidth and must be positive. If `Symbol`,
+    indicates the method to estimate the bandwidth and must be one of `:scott`,
+    `:silverman`, `:isj` or `:experimental` when `circular=false` and `:taylor` (for now)
+    when `circular=true`. `:default` means `:experimental` when variable is not circular
+    and `:taylor` when it is.
+- `circular=false`: Select input type in `(:radians, :degrees)` for circular KDE plot. If
+    `true`, default input type is `:radians`. Pass `projection=:polar` to also plot on a
+    polar axis; however, this will not plot correctly when `circular=:degrees`.
 - `cumulative=false`: If `true`, plot the estimated cumulative distribution function
 - `showrug=false`: If `true`, adds a rugplot
 - `rugspace=$DEFAULT_RUG_SPACE`: control the `y` position of the rugplot. The larger this
@@ -35,13 +43,17 @@ RecipesBase.@recipe function f(
     x,
     y,
     z;
+    bw=:default,
+    circular=false,
     cumulative=false,
     showrug=false,
     rugspace=DEFAULT_RUG_SPACE,
 )
     if x === eachindex(y) # x was (probably) auto-generated from y
-        isrot = isrotated(plotattributes)
-        xnew, ynew = kde(y)
+        if bw === :default
+            bw = circular === false ? :experimental : :taylor
+        end
+        xnew, ynew = kde(y; bw=bw, circular=(circular !== false))
         if cumulative
             ynew = cumsum(ynew)
             ynew ./= ynew[end]
@@ -59,7 +71,7 @@ RecipesBase.@recipe function f(
                 ()
             end
         else # no need to set ylims if rug already widened axes for us
-            if isrot
+            if isrotated(plotattributes)
                 xlims --> (0, Inf)
             else
                 ylims --> (0, Inf)
@@ -90,13 +102,21 @@ Plot a 2D kernel density estimate (KDE) taking into account boundary conditions.
 - `y`: `y` coordinates of the values
 
 # Keyword Arguments
+- `bw=:default`: If numeric, indicates the bandwidth and must be positive. If `Symbol`,
+    indicates the method to estimate the bandwidth and must be one of `:scott`,
+    `:silverman`, `:isj` or `:experimental` when `circular=false` and `:taylor` (for now)
+    when `circular=true`. `:default` means `:experimental` when variable is not circular
+    and `:taylor` when it is.
 - `contour=true`: If `true`, plot the 2D KDE using contours, otherwise plot a heatmap.
 - `kwargs`: Additional attributes understood by Plots.jl.
 """
 RecipesBase.@shorthands kde2dplot
 
-RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true)
-    xnew, ynew, density = kde(x, y)
+RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true, bw=:default)
+    if bw === :default
+        bw = :experimental
+    end
+    xnew, ynew, density = kde(x, y; bw=bw)
     seriestype := contour ? :contour : :heatmap
     if isrotated(plotattributes)
         xnew, ynew = ynew, xnew
