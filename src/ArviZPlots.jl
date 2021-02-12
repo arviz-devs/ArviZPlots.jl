@@ -13,6 +13,7 @@ include("ingredients.jl")
 include("ecdfplot.jl")
 include("kdeplot.jl")
 include("distplot.jl")
+include("energyplot.jl")
 include("pipeline.jl")
 
 function __init__()
