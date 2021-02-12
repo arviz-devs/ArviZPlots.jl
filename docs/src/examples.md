@@ -86,6 +86,8 @@ Represent energy plot via histograms
 energyplot(data; kind=:hist, strokewidth=0)
 ```
 
+See [`energyplot`](@ref)
+
 ## KDE Plot
 
 Plot default KDE
