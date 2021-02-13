@@ -3,6 +3,7 @@ module ArviZPlots
 using ArviZ
 using Colors: @colorant_str, RGB
 using PlotThemes: PlotThemes
+using Printf
 using RecipesBase: RecipesBase
 using RecipesPipeline: RecipesPipeline
 using StatsBase: StatsBase
