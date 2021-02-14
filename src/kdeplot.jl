@@ -70,11 +70,17 @@ RecipesBase.@recipe function f(
                 y := y
                 ()
             end
-        else # no need to set ylims if rug already widened axes for us
-            if isrotated(plotattributes)
-                xlims --> (0, Inf)
-            else
-                ylims --> (0, Inf)
+        else
+            # add dummy point to widen density axis to include density of 0
+            RecipesBase.@series begin
+                seriestype := :path
+                primary := false
+                seriesalpha := 0
+                label := ""
+                xpt, ypt = isrotated(plotattributes) ? (0, xnew[1]) : (xnew[1], 0)
+                x := [xpt]
+                y := [ypt]
+                ()
             end
         end
         seriestype := :path
