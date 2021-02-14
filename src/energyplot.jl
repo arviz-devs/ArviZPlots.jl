@@ -45,6 +45,8 @@ RecipesBase.@recipe function f(p::EnergyPlot; showbfmi=true)
     legend --> :best
     fill --> get(plotattributes, :kind, :default) !== :ecdf
     fillalpha --> [1 0.75]
+    # use first 2 colors in color cycle
+    seriescolor --> [1 2]
     grid --> false
     ticks --> nothing
     return [energy_marginal, energy_trans]
