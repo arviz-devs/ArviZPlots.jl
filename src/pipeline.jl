@@ -50,7 +50,7 @@ RecipesBase.@recipe function f(
     series_values = Vector{<:Real}[]
     chains = Vector{Int}[]
     for (var_name, selection, values) in plotters
-        label = ArviZ.arviz.plots.plot_utils.make_label(var_name, selection)
+        label = make_label(var_name, selection)
         push!(titles, label)
         push!(series_values, vec(values))
         sz = size(values)
