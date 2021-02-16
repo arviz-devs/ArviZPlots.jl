@@ -136,6 +136,7 @@ RecipesBase.@recipe function f(
                         end
                         if pair_seriestype === :scatter
                             markersize --> 1.5
+                            markerstrokewidth --> 0
                             # allow using fill=true to fill contour without filling scatter
                             fill := false
                         end
