@@ -28,7 +28,7 @@ Plot a scatter, kde and/or hexbin matrix with (optional) marginals on the diagon
     if group is either `:prior` or `:posterior`.
 - `divergencescolor`: Color of divergences markers.
 - `kwargs`: Additional attributes understood by Plots.jl. In particular, see keyword
-    arguments for [`distplot`](@ref), [`kdeplot`](@ref), and [`kdeplot2d`](@ref).
+    arguments for [`distplot`](@ref), [`kdeplot`](@ref), and [`kde2dplot`](@ref).
 """
 RecipesBase.@userplot PairPlot
 
