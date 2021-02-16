@@ -158,6 +158,7 @@ RecipesBase.@recipe function f(
                     xlims := widen(xmin, xmax)
                     markercolor := divergencescolor
                     markersize --> 3
+                    markerstrokewidth --> 1
                     fill := false
                     label := "divergent"
                     ()
