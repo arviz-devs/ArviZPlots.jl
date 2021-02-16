@@ -10,7 +10,7 @@ Plot histogram (Note that the histogram recipe is defined generally in Plots.jl)
 using ArviZ, ArviZPlots, Plots
 
 data = load_arviz_data("centered_eight")
-histogram(data; legend=false, bins=20)
+histogram(data; legend=false, bins=20, titlefontsize=8)
 ```
 
 Plot estimated density of posterior and then prior.
