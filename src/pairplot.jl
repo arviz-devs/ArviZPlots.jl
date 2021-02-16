@@ -114,53 +114,76 @@ RecipesBase.@recipe function f(
     for j in 1:vars_to_plot
         xvar = vec(plotters[j][end])
         xmin, xmax = extrema(xvar)
-        for i in (j + showmarginals):(vars_to_plot)
-            yvar = vec(plotters[i + 1 - showmarginals][end])
-            ymin, ymax = extrema(yvar)
-            for pair_seriestype in pair_seriestypes
-                isprimary = length(pair_seriestypes) == 1 || pair_seriestype === :scatter
-                RecipesBase.@series begin # pair distribution
-                    seriestype := pair_seriestype
-                    primary := isprimary
+        for i in 1:vars_to_plot
+            if i ≥ j + showmarginals
+                yvar = vec(plotters[i + 1 - showmarginals][end])
+                ymin, ymax = extrema(yvar)
+                for pair_seriestype in pair_seriestypes
+                    isprimary =
+                        length(pair_seriestypes) == 1 || pair_seriestype === :scatter
+                    RecipesBase.@series begin # pair distribution
+                        seriestype := pair_seriestype
+                        primary := isprimary
+                        subplot := subplot_indices[i, j]
+                        x := xvar
+                        y := yvar
+                        if showmarginals
+                            xlims := widen(xmin, xmax)
+                            ylims := widen(ymin, ymax)
+                        end
+                        if pair_seriestype === :scatter
+                            markersize --> 1.5
+                            # allow using fill=true to fill contour without filling scatter
+                            fill := false
+                        end
+                        bins --> round.(Int, length.((xvar, yvar)) .^ 0.35)
+                        if pair_seriestype === :hexbin
+                            # PyPlot-specific arguments, see https://github.com/JuliaPlots/Plots.jl/pull/3302
+                            update_plot_extra_kwargs!(
+                                plotattributes,
+                                :series,
+                                Dict(:mincnt => 1, :edgecolors => :face),
+                            )
+                        end
+                        label := ""
+                        ()
+                    end
+                end
+                # plot divergences
+                showdivergences && RecipesBase.@series begin
+                    seriestype := :scatter
                     subplot := subplot_indices[i, j]
-                    x := xvar
-                    y := yvar
-                    if pair_seriestype === :scatter
-                        markersize --> 1.5
-                        # allow using fill=true to fill contour without filling scatter
-                        fill := false
-                    end
-                    bins --> round.(Int, length.((xvar, yvar)) .^ 0.35)
-                    if pair_seriestype === :hexbin
-                        # PyPlot-specific arguments, see https://github.com/JuliaPlots/Plots.jl/pull/3302
-                        update_plot_extra_kwargs!(
-                            plotattributes,
-                            :series,
-                            Dict(:mincnt => 1, :edgecolors => :face),
-                        )
-                    end
-                    label := ""
+                    x := view(xvar, divergent)
+                    y := view(yvar, divergent)
+                    xlims := widen(xmin, xmax)
+                    markercolor := divergencescolor
+                    markersize --> 3
+                    fill := false
+                    label := "divergent"
                     ()
                 end
+            elseif showmarginals && i == j
+                # plot marginal
+                # TODO: special-case for vars_to_plot==2
+                RecipesBase.@series begin
+                    seriestype := :distplot
+                    subplot := subplot_indices[j, j]
+                    label := ""
+                    tuple(xvar)
+                end
+            else
+                # make empty plot
+                RecipesBase.@series begin
+                    seriestype := :_emptyplot
+                    subplot := subplot_indices[i, j]
+                    ()
+                end
+                continue
             end
-            showdivergences && RecipesBase.@series begin
-                seriestype := :scatter
-                subplot := subplot_indices[i, j]
-                x := view(xvar, divergent)
-                y := view(yvar, divergent)
-                markercolor := divergencescolor
-                markersize --> 2
-                fill := false
-                label := "divergent"
-                ()
-            end
+            # reset guides, ticks, and legends
             RecipesBase.@series begin
                 primary := false
                 subplot := subplot_indices[i, j]
-                if showmarginals
-                    xlims := widen(xmin, xmax)
-                    ylims := widen(ymin, ymax)
-                end
                 xguide := i === vars_to_plot ? flat_var_names[j] : ""
                 yguide := j === 1 ? flat_var_names[i + 1 - showmarginals] : ""
                 xticks := i === vars_to_plot ? :auto : nothing
@@ -169,38 +192,22 @@ RecipesBase.@recipe function f(
                 ()
             end
         end
-
-        # TODO: special-case for vars_to_plot==2
-        showmarginals && RecipesBase.@series begin
-            seriestype := :distplot
-            subplot := subplot_indices[j, j]
-            x := eachindex(xvar)
-            y := xvar
-            xlims := widen(xmin, xmax)
-            xguide := j === vars_to_plot ? flat_var_names[j] : ""
-            yguide := j === 1 ? flat_var_names[j + 1 - showmarginals] : ""
-            xticks := j === vars_to_plot ? :auto : nothing
-            yticks := j === 1 ? :auto : nothing
-            label := ""
-            ()
-        end
-
-        for i in 1:(j - 1)
-            # reset all unused panes to be completely empty
-            # NOTE: tested with our packaged themes and several themes in RecipesBase
-            RecipesBase.@series begin # empty plots
-                seriestype := :path
-                subplot := subplot_indices[i, j]
-                primary := false
-                showaxis := false
-                ticks := false
-                background_color_inside := :match
-                ()
-            end
-        end
     end
     # this user plot's data should not populate any of the subplots
     x := nothing
     y := nothing
     return nothing
+end
+
+# reset all unused panes to be completely empty
+# NOTE: tested with our packaged themes and several themes in RecipesBase
+RecipesBase.@recipe function f(::Type{Val{:_emptyplot}}, x, y, z)
+    seriestype := :path
+    primary := false  # don't show up in legend or increment color cycle
+    showaxis := false  # hide axes and guides
+    ticks := false  # hide ticks
+    background_color_inside := :match  # reset to match pane color
+    x := nothing
+    y := nothing
+    return ()
 end
