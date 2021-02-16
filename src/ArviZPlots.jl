@@ -2,6 +2,7 @@ module ArviZPlots
 
 using ArviZ
 using Colors: @colorant_str, RGB
+using Measures: mm
 using PlotThemes: PlotThemes
 using Printf
 using RecipesBase: RecipesBase
