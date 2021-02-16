@@ -45,6 +45,7 @@ RecipesBase.@recipe function f(
     showdivergences=false,
     divergencescolor=2,
     point_estimate=nothing,
+    point_estimate_color=:black,
 )
     data = convert(InferenceData, only(plt.args))
     dataset = ArviZ.convert_to_dataset(data; group=group)
@@ -175,7 +176,7 @@ RecipesBase.@recipe function f(
                     seriestype := :_pointcrossplot
                     subplot := subplot_indices[i, j]
                     label := "$point_estimate"
-                    seriescolor --> 2
+                    seriescolor := point_estimate_color
                     ([x_pest], [y_pest])
                 end
             elseif showmarginals && i == j
@@ -191,7 +192,7 @@ RecipesBase.@recipe function f(
                     seriestype := :vline
                     subplot := subplot_indices[i, j]
                     label := "$point_estimate"
-                    seriescolor --> 2
+                    linecolor := point_estimate_color
                     tuple([x_pest])
                 end
             else
@@ -223,19 +224,23 @@ RecipesBase.@recipe function f(
 end
 
 RecipesBase.@recipe function f(::Type{Val{:_pointcrossplot}}, x, y, z)
+    color = plotattributes[:seriescolor]
     RecipesBase.@series begin
         seriestype := :hline
         primary := false
         y := y
+        linecolor := color
         ()
     end
     RecipesBase.@series begin
         seriestype := :vline
         primary := false
         y := x
+        linecolor := color
         ()
     end
     seriestype := :scatter
+    markercolor := color
     markershape --> :square
     markersize --> 4
     return ()
