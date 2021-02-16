@@ -27,6 +27,8 @@ Plot a scatter, kde and/or hexbin matrix with (optional) marginals on the diagon
 - `showdivergences=false`: If `true`, divergences will be plotted in a different color, only
     if group is either `:prior` or `:posterior`.
 - `divergencescolor`: Color of divergences markers.
+- `point_estimate=nothing`: Select point estimate from `:mean`, `:mode` or `:median`. The
+    point estimate will be plotted using a scatter marker and vertical/horizontal lines.
 - `kwargs`: Additional attributes understood by Plots.jl. In particular, see keyword
     arguments for [`distplot`](@ref), [`kdeplot`](@ref), and [`kde2dplot`](@ref).
 """
@@ -42,6 +44,7 @@ RecipesBase.@recipe function f(
     kind=:scatter,
     showdivergences=false,
     divergencescolor=2,
+    point_estimate=nothing,
 )
     data = convert(InferenceData, only(plt.args))
     dataset = ArviZ.convert_to_dataset(data; group=group)
@@ -117,10 +120,16 @@ RecipesBase.@recipe function f(
     for j in 1:vars_to_plot
         xvar = vec(plotters[j][end])
         xmin, xmax = extrema(xvar)
+        if point_estimate !== nothing
+            x_pest = calculate_point_estimate(point_estimate, xvar)
+        end
         for i in 1:vars_to_plot
             if i ≥ j + showmarginals
                 yvar = vec(plotters[i + 1 - showmarginals][end])
                 ymin, ymax = extrema(yvar)
+                if point_estimate !== nothing
+                    y_pest = calculate_point_estimate(point_estimate, yvar)
+                end
                 for pair_seriestype in pair_seriestypes
                     isprimary =
                         length(pair_seriestypes) == 1 || pair_seriestype === :scatter
@@ -130,10 +139,6 @@ RecipesBase.@recipe function f(
                         subplot := subplot_indices[i, j]
                         x := xvar
                         y := yvar
-                        if showmarginals
-                            xlims := widen(xmin, xmax)
-                            ylims := widen(ymin, ymax)
-                        end
                         if pair_seriestype === :scatter
                             markersize --> 1.5
                             markerstrokewidth --> 0
@@ -159,13 +164,19 @@ RecipesBase.@recipe function f(
                     subplot := subplot_indices[i, j]
                     x := view(xvar, divergent)
                     y := view(yvar, divergent)
-                    xlims := widen(xmin, xmax)
                     markercolor := divergencescolor
                     markersize --> 3
                     markerstrokewidth --> 1
                     fill := false
                     label := "divergent"
                     ()
+                end
+                point_estimate === nothing || RecipesBase.@series begin
+                    seriestype := :_pointcrossplot
+                    subplot := subplot_indices[i, j]
+                    label := "$point_estimate"
+                    seriescolor --> 2
+                    ([x_pest], [y_pest])
                 end
             elseif showmarginals && i == j
                 # plot marginal
@@ -175,6 +186,13 @@ RecipesBase.@recipe function f(
                     subplot := subplot_indices[j, j]
                     label := ""
                     tuple(xvar)
+                end
+                point_estimate === nothing || RecipesBase.@series begin
+                    seriestype := :vline
+                    subplot := subplot_indices[i, j]
+                    label := "$point_estimate"
+                    seriescolor --> 2
+                    tuple([x_pest])
                 end
             else
                 # make empty plot
@@ -202,6 +220,25 @@ RecipesBase.@recipe function f(
     x := nothing
     y := nothing
     return nothing
+end
+
+RecipesBase.@recipe function f(::Type{Val{:_pointcrossplot}}, x, y, z)
+    RecipesBase.@series begin
+        seriestype := :hline
+        primary := false
+        y := y
+        ()
+    end
+    RecipesBase.@series begin
+        seriestype := :vline
+        primary := false
+        y := x
+        ()
+    end
+    seriestype := :scatter
+    markershape --> :square
+    markersize --> 4
+    return ()
 end
 
 # reset all unused panes to be completely empty

@@ -15,6 +15,13 @@ end
 
 get_bins(x) = ArviZ.arviz.stats.density_utils.get_bins(x)
 
+function calculate_point_estimate(point_estimate::Union{String,Symbol}, values; kwargs...)
+    return ArviZ.arviz.plots.plot_utils.calculate_point_estimate(point_estimate, values; kwargs...)
+end
+function calculate_point_estimate(point_estimate, values; kwargs...)
+    return calculate_point_estimate("$point_estimate", values; kwargs...)
+end
+
 # adapted from Plots
 function widen(lmin, lmax, scale=:identity)
     f, invf = RecipesPipeline.scale_func(scale), RecipesPipeline.inverse_scale_func(scale)
