@@ -101,8 +101,11 @@ RecipesBase.@recipe function f(
     end
 
     layout := (vars_to_plot, vars_to_plot)
-    if !showmarginals
-        # use axis-linking feature if possible
+    if showmarginals
+        # can't link y-axes because distplot uses a different scale, so we at least link
+        # the columns
+        link := :x
+    else
         link := :both
     end
     grid --> false
