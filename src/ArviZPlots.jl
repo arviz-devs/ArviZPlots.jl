@@ -15,6 +15,7 @@ include("ecdfplot.jl")
 include("kdeplot.jl")
 include("distplot.jl")
 include("energyplot.jl")
+include("pairplot.jl")
 include("pipeline.jl")
 
 function __init__()
