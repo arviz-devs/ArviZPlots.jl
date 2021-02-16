@@ -156,6 +156,58 @@ kde2dplot(mu_posterior, tau_posterior; contour=false)
 
 See [`kde2dplot`](@ref)
 
+## Pair Plot
+
+KDE Pair Plot
+
+```@example pairplot
+using ArviZ, ArviZPlots, Plots
+
+centered = load_arviz_data("centered_eight")
+coords = Dict("school"=> ["Choate", "Deerfield"])
+pairplot(
+    centered;
+    var_names=["theta", "mu", "tau"],
+    kind=:kde,
+    coords=coords,
+    showdivergences=true,
+)
+```
+
+Histogram pair plot
+
+```@example pairplot
+pairplot(centered; var_names=["theta", "mu"], kind=:hist, coords=coords)
+```
+
+Pair plot showing divergences and select variables with regular expressions
+
+```@example pairplot
+pairplot(
+    centered;
+    var_names=["^t", "mu"],
+    filter_vars="regex",
+    coords=coords,
+    showdivergences=true,
+)
+```
+
+Pair plot showing layered KDE and scatter with marginal density plots
+
+```@example pairplot
+pairplot(
+    centered;
+    var_names=["mu", "theta"],
+    kind=[:scatter, :kde],
+    showmarginals=true,
+    coords=coords,
+    linecolor=:black,
+    size=(1000, 800),
+)
+```
+
+See [`pairplot`](@ref)
+
 ## Themes
 
 ArviZPlots comes with the following themes, which can be activated e.g. using
