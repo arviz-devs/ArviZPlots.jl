@@ -192,7 +192,7 @@ pairplot(
 )
 ```
 
-Pair plot showing layered KDE and scatter with marginal density plots
+Pair plot showing layered KDE and scatter with marginal density plots and a point estimate
 
 ```@example pairplot
 pairplot(
@@ -201,6 +201,7 @@ pairplot(
     kind=[:scatter, :kde],
     showmarginals=true,
     coords=coords,
+    point_estimate=:median,
     linecolor=:black,
     size=(1000, 800),
 )
