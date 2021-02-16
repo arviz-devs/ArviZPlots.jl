@@ -26,6 +26,7 @@ RecipesBase.@shorthands distplot
 
 RecipesBase.@recipe function f(::Type{Val{:distplot}}, x, y, z; kind=:auto, circular=false)
     if kind == :hist || (kind === :auto && all(isinteger, y))
+        bins = get(plotattributes, :bins, get_bins(y))
         if circular === false
             seriestype := :barhist
         else
@@ -34,6 +35,7 @@ RecipesBase.@recipe function f(::Type{Val{:distplot}}, x, y, z; kind=:auto, circ
             seriestype := :stephist
             fill --> true
         end
+        bins := bins
         normalize --> :pdf
         orientation := isrotated(plotattributes) ? :horizontal : :vertical
     elseif kind === :kde || kind === :auto
@@ -41,5 +43,6 @@ RecipesBase.@recipe function f(::Type{Val{:distplot}}, x, y, z; kind=:auto, circ
     elseif kind === :ecdf
         seriestype := :ecdfplot
     end
+    y := y
     return ()
 end
