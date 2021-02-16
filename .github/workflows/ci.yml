@@ -42,7 +42,8 @@ jobs:
           file: lcov.info
   docs:
     name: Documentation
-    runs-on: ubuntu-latest
+    # build docs on macOS to avoid GR backend clipping plots on ubuntu
+    runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
