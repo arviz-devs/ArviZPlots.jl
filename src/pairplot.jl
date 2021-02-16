@@ -106,6 +106,9 @@ RecipesBase.@recipe function f(
         link := :both
     end
     grid --> false
+    margin --> 0mm
+    left_margin --> 1mm
+    bottom_margin --> 1mm
 
     subplot_indices = reshape(1:(vars_to_plot^2), vars_to_plot, vars_to_plot)'
     for j in 1:vars_to_plot
@@ -160,8 +163,8 @@ RecipesBase.@recipe function f(
                 end
                 xguide := i === vars_to_plot ? flat_var_names[j] : ""
                 yguide := j === 1 ? flat_var_names[i + 1 - showmarginals] : ""
-                xticks := i === vars_to_plot ? :auto : []
-                yticks := j === 1 ? :auto : []
+                xticks := i === vars_to_plot ? :auto : nothing
+                yticks := j === 1 ? :auto : nothing
                 legend --> false
                 ()
             end
@@ -176,8 +179,8 @@ RecipesBase.@recipe function f(
             xlims := widen(xmin, xmax)
             xguide := j === vars_to_plot ? flat_var_names[j] : ""
             yguide := j === 1 ? flat_var_names[j + 1 - showmarginals] : ""
-            xticks := j === vars_to_plot ? :auto : []
-            yticks := j === 1 ? :auto : []
+            xticks := j === vars_to_plot ? :auto : nothing
+            yticks := j === 1 ? :auto : nothing
             label := ""
             ()
         end
