@@ -108,21 +108,13 @@ Plot a 2D kernel density estimate (KDE) taking into account boundary conditions.
 - `y`: `y` coordinates of the values
 
 # Keyword Arguments
-- `bw=:default`: If numeric, indicates the bandwidth and must be positive. If `Symbol`,
-    indicates the method to estimate the bandwidth and must be one of `:scott`,
-    `:silverman`, `:isj` or `:experimental` when `circular=false` and `:taylor` (for now)
-    when `circular=true`. `:default` means `:experimental` when variable is not circular
-    and `:taylor` when it is.
 - `contour=true`: If `true`, plot the 2D KDE using contours, otherwise plot a heatmap.
 - `kwargs`: Additional attributes understood by Plots.jl.
 """
 RecipesBase.@shorthands kde2dplot
 
-RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true, bw=:default)
-    if bw === :default
-        bw = :experimental
-    end
-    xnew, ynew, density = kde(x, y; bw=bw)
+RecipesBase.@recipe function f(::Type{Val{:kde2dplot}}, x, y, z; contour=true)
+    xnew, ynew, density = kde(x, y)
     seriestype := contour ? :contour : :heatmap
     if isrotated(plotattributes)
         xnew, ynew = ynew, xnew
