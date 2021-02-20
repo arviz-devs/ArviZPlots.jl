@@ -43,6 +43,7 @@ jobs:
   docs:
     name: Documentation
     # build docs on macOS to avoid GR backend clipping plots on ubuntu
+    # may be due to https://github.com/JuliaPlots/Plots.jl/issues/2127
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
