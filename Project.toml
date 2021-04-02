@@ -14,7 +14,7 @@ RecipesPipeline = "01d81517-befc-4cb6-b9ec-a95719d0359c"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
-ArviZ = "0.4"
+ArviZ = "0.4, 0.5"
 Colors = "0.11, 0.12"
 Measures = "0.3"
 PlotThemes = "2"
