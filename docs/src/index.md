@@ -4,6 +4,6 @@ CurrentModule = ArviZPlots
 
 # ArviZPlots
 
-ArviZPlots provides experimental [Plots.jl](https://github.com/JuliaPlots/Plots.jl) integration to [ArviZ.jl](https://github.com/arviz-devs/ArviZ.jl). 
+ArviZPlots provides experimental [Plots.jl](https://docs.juliaplots.org) integration with [ArviZ.jl](https://julia.arviz.org/ArviZ/stable). 
 
 See [Examples](@ref examples) for currently supported plots.
